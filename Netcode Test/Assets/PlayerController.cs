@@ -1,20 +1,18 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace NetcodeTest
+public class PlayerController : NetworkBehaviour
 {
-    public class PlayerController : NetworkBehaviour
-    {
-        [SerializeField] float speed;
+    [SerializeField] float speed;
 
-        private void Update()
+    private void Update()
+    {
+        if (IsLocalPlayer)
         {
-            if (IsLocalPlayer)
-            {
-                Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-                Vector3 velocity = input * speed * Time.deltaTime;
-                transform.position += velocity;
-            }
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            Vector3 velocity = input * speed * Time.deltaTime;
+            transform.position += velocity;
         }
     }
 }
